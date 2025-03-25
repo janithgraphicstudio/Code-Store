@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JGS CODE STORE 2025</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+        
+        :root {
+            --primary: #4a00e0;
+            --secondary: #8e2de2;
+            --text: #ffffff;
+            --accent: #00d4ff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #000;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+        
+        .header-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow: hidden;
+        }
+        
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #000000, #0f0f1a);
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        .animated-bg::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent 45%,
+                rgba(74, 0, 224, 0.1) 48%,
+                rgba(74, 0, 224, 0.1) 52%,
+                transparent 55%
+            ),
+            linear-gradient(
+                to top right,
+                transparent 45%,
+                rgba(142, 45, 226, 0.1) 48%,
+                rgba(142, 45, 226, 0.1) 52%,
+                transparent 55%
+            );
+            animation: animateLines 20s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes animateLines {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .title {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+            position: relative;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(74, 0, 224, 0.7), 0 0 20px rgba(142, 45, 226, 0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(74, 0, 224, 0.9), 0 0 30px rgba(142, 45, 226, 0.7), 0 0 40px rgba(0, 212, 255, 0.5);
+            }
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            max-width: 800px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .dropdown-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+        
+        .dropdown-btn {
+            width: 100%;
+            padding: 1.2rem 2rem;
+            background: rgba(30, 30, 45, 0.8);
+            border: 2px solid rgba(74, 0, 224, 0.5);
+            color: var(--text);
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .dropdown-btn:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(74, 0, 224, 0.3);
+        }
+        
+        .dropdown-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 0, 224, 0.3);
+        }
+        
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: rgba(20, 20, 35, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.5s ease, opacity 0.3s ease;
+            opacity: 0;
+            z-index: 10;
+            backdrop-filter: blur(15px);
+        }
+        
+        .dropdown-content.show {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 5px;
+        }
+        
+        .dropdown-item {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid rgba(74, 0, 224, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-item:hover {
+            background: rgba(74, 0, 224, 0.2);
+            padding-left: 2.2rem;
+        }
+        
+        .dropdown-item::before {
+            content: "→";
+            margin-right: 10px;
+            color: var(--accent);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-item:hover::before {
+            opacity: 1;
+            margin-right: 15px;
+        }
+        
+        .get-code-btn {
+            padding: 1.2rem 3rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(74, 0, 224, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        
+        .get-code-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(74, 0, 224, 0.4);
+        }
+        
+        .get-code-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .get-code-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .get-code-btn:hover::before {
+            left: 100%;
+        }
+        
+        .loading-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(74, 0, 224, 0.2);
+            border-radius: 2px;
+            margin-top: 2rem;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .loading-progress {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+        
+        .visit-link {
+            display: none;
+            margin-top: 2rem;
+            padding: 1.2rem 2rem;
+            background: linear-gradient(45deg, #00c853, #64dd17);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 200, 83, 0.3);
+        }
+        
+        .visit-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 200, 83, 0.4);
+        }
+        
+        .visit-link i {
+            margin-right: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .dropdown-btn, .dropdown-item {
+                padding: 1rem 1.5rem;
+            }
+            
+            .visit-link {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="header-container">
+        <div class="animated-bg"></div>
+        
+        <h1 class="title" id="animated-title">JGS CODE STORE 2025</h1>
+        <p class="subtitle">කෘතිම බුද්ධියෙන් බල ගැන්වුන නවතම මෙවලම් ඔබේම නමින් හදලා නිකුත් කරන්න මෙන්න ඕපන් සෝස් අඩවියක්</p>
+        
+        <div class="dropdown-container">
+            <button class="dropdown-btn" id="dropdownBtn">
+                <span id="selectedOption">තෝරන්න මෙවලමක්</span>
+                <span>▼</span>
+            </button>
+            <div class="dropdown-content" id="dropdownContent">
+                <div class="dropdown-item" data-value="JGS Photo Generator Ai Beta">JGS Photo Generator Ai Beta</div>
+                <div class="dropdown-item" data-value="JGS Code Run Plus 2025 Update">JGS Code Run Plus 2025 Update</div>
+                <div class="dropdown-item" data-value="JGS Text Analyzer Pro+ 2025 Update">JGS Text Analyzer Pro+ 2025 Update</div>
+                <div class="dropdown-item" data-value="JGS Web Code Combiner Update">JGS Web Code Combiner Update</div>
+                <div class="dropdown-item" data-value="JGS Audio Tag Editor">JGS Audio Tag Editor</div>
+                <div class="dropdown-item" data-value="JGS Text Analyzer Tool">JGS Text Analyzer Tool</div>
+                <div class="dropdown-item" data-value="JGS Advanced Image Watermarking App Update">JGS Advanced Image Watermarking App Update</div>
+                <div class="dropdown-item" data-value="JGS Code Run Pro 25.2v">JGS Code Run Pro 25.2v</div>
+                <div class="dropdown-item" data-value="JGS Interactive Graph Generator">JGS Interactive Graph Generator</div>
+                <div class="dropdown-item" data-value="JGS Advanced QR Code Generator">JGS Advanced QR Code Generator</div>
+                <div class="dropdown-item" data-value="JGS Data Encryption & Decryption">JGS Data Encryption & Decryption</div>
+                <div class="dropdown-item" data-value="JGS Image Size Converter">JGS Image Size Converter</div>
+                <div class="dropdown-item" data-value="JGS Doc to Password 20.1v">JGS Doc to Password 20.1v</div>
+                <div class="dropdown-item" data-value="JGS Image Converter">JGS Image Converter</div>
+            </div>
+        </div>
+        
+        <button class="get-code-btn" id="getCodeBtn">Get Code</button>
+        
+        <div class="loading-bar" id="loadingBar">
+            <div class="loading-progress" id="loadingProgress"></div>
+        </div>
+        
+        <a href="#" class="visit-link" id="visitLink" target="_blank">
+            <i class="fas fa-external-link-alt"></i> Visit Tool Page
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate title
+            const title = document.getElementById('animated-title');
+            let letters = title.textContent.split('');
+            title.textContent = '';
+            
+            letters.forEach((letter, i) => {
+                let span = document.createElement('span');
+                span.textContent = letter;
+                span.style.opacity = '0';
+                span.style.display = 'inline-block';
+                span.style.transform = 'translateY(20px)';
+                title.appendChild(span);
+                
+                setTimeout(() => {
+                    span.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    span.style.opacity = '1';
+                    span.style.transform = 'translateY(0)';
+                }, 100 * i);
+            });
+            
+            // Dropdown functionality
+            const dropdownBtn = document.getElementById('dropdownBtn');
+            const dropdownContent = document.getElementById('dropdownContent');
+            const selectedOption = document.getElementById('selectedOption');
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            const getCodeBtn = document.getElementById('getCodeBtn');
+            const loadingBar = document.getElementById('loadingBar');
+            const loadingProgress = document.getElementById('loadingProgress');
+            const visitLink = document.getElementById('visitLink');
+            
+            let selectedTool = null;
+            
+            // Tool URLs mapping
+            const toolUrls = {
+                  "JGS Photo Generator Ai Beta": "drive.google.com/file/d/15EGOLSzoHRLcZ7FTCpupVK6Gpy1vJbCz/view?usp=drive_link",
+            "JGS Code Run Plus 2025 Update": "drive.google.com/file/d/1EDq87-NUE3sjF4X30RAnSabbuA5slmsG/view?usp=drive_link",
+            "JGS Text Analyzer Pro+ 2025 Update": "drive.google.com/file/d/16ZirlkoLrhm74gGLLNik1Z3DyU8cTpB8/view?usp=drive_link",
+            "JGS Web Code Combiner Update": "drive.google.com/file/d/1sWUh933HklcC3mZ60EueyLPf1Es7bbp1/view?usp=drive_link",
+            "JGS Audio Tag Editor": "drive.google.com/file/d/1WvBXTxqxNr2MZrkT1teQ6ku5u7ign64D/view?usp=drive_link",
+            "JGS Text Analyzer Tool": "drive.google.com/file/d/16ZirlkoLrhm74gGLLNik1Z3DyU8cTpB8/view?usp=drive_link",
+            "JGS Advanced Image Watermarking App Update": "drive.google.com/file/d/12Xui7Zeek2WXJpQb6kEBpQ7u1Wi1E5g6/view?usp=drive_link",
+            "JGS Code Run Pro 25.2v": "drive.google.com/file/d/1xtdNlfeENEWVdXPCPsPtywFghO-MUSPm/view?usp=drive_link",
+            "JGS Interactive Graph Generator": "drive.google.com/file/d/1zmxz8XtpA_YGySexV90JikgRvEepWg8-/view?usp=drive_link",
+            "JGS Advanced QR Code Generator": "drive.google.com/file/d/1DPvk7GcV2MPKP4zuPhp_UpLtlB_xHdik/view?usp=drive_link",
+            "JGS Data Encryption & Decryption": "drive.google.com/file/d/115m6REN8BagAu4EArlaGsHY2jeWJE5s5/view?usp=drive_link",
+            "JGS Image Size Converter": "drive.google.com/file/d/1bxa60ELUT1zQr4RyXpuVdv9mGpmyXFXw/view?usp=drive_link",
+            "JGS Doc to Password 20.1v": "drive.google.com/file/d/1o_K4xEwgg6-O5LJQPVCBaazAjqhob-au/view?usp=drive_link",
+            "JGS Image Converter": "drive.google.com/file/d/1dybQmNeQXAYL34qirFA2phmu-4ooFbfk/view?usp=drive_link"
+            };
+            
+            // Toggle dropdown
+            dropdownBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownContent.classList.toggle('show');
+                this.querySelector('span:last-child').textContent = 
+                    dropdownContent.classList.contains('show') ? '▲' : '▼';
+            });
+            
+            // Select dropdown item
+            dropdownItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    selectedTool = this.getAttribute('data-value');
+                    selectedOption.textContent = selectedTool;
+                    dropdownContent.classList.remove('show');
+                    dropdownBtn.querySelector('span:last-child').textContent = '▼';
+                    visitLink.style.display = 'none';
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function() {
+                dropdownContent.classList.remove('show');
+                dropdownBtn.querySelector('span:last-child').textContent = '▼';
+            });
+            
+            // Get code button click
+            getCodeBtn.addEventListener('click', function() {
+                if (!selectedTool) {
+                    alert('කරුණාකර මෙවලමක් තෝරන්න!');
+                    return;
+                }
+                
+                // Show loading bar
+                loadingBar.style.display = 'block';
+                loadingProgress.style.width = '0';
+                visitLink.style.display = 'none';
+                
+                // Simulate loading
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 10;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(interval);
+                        
+                        // Hide loading bar and show visit link
+                        setTimeout(() => {
+                            loadingBar.style.display = 'none';
+                            visitLink.href = `https://${toolUrls[selectedTool]}`;
+                            visitLink.style.display = 'inline-flex';
+                        }, 300);
+                    }
+                    loadingProgress.style.width = `${progress}%`;
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
