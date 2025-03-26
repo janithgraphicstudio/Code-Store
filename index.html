@@ -147,7 +147,7 @@
             box-shadow: 0 0 0 3px rgba(74, 0, 224, 0.3);
         }
         
-        .dropdown-content {
+       .dropdown-content {
             position: absolute;
             top: 100%;
             left: 0;
@@ -155,18 +155,36 @@
             background: rgba(20, 20, 35, 0.95);
             border-radius: 8px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
             max-height: 0;
-            transition: max-height 0.5s ease, opacity 0.3s ease;
             opacity: 0;
+            transition: opacity 0.3s ease, max-height 0.3s ease;
             z-index: 10;
             backdrop-filter: blur(15px);
+            overflow-y: auto; /* Changed from hidden to auto */
         }
         
         .dropdown-content.show {
-            max-height: 500px;
+            max-height: 60vh; /* Changed from fixed px to viewport height */
             opacity: 1;
             margin-top: 5px;
+            overflow-y: auto; /* Ensure scrollbar appears when needed */
+        }
+          /* Add scrollbar styling */
+        .dropdown-content::-webkit-scrollbar {
+            width: 8px;
+        }
+           .dropdown-content::-webkit-scrollbar-track {
+            background: rgba(74, 0, 224, 0.1);
+            border-radius: 4px;
+        }
+        
+        .dropdown-content::-webkit-scrollbar-thumb {
+            background: rgba(74, 0, 224, 0.3);
+            border-radius: 4px;
+        }
+        
+        .dropdown-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(74, 0, 224, 0.5);
         }
         
         .dropdown-item {
@@ -344,6 +362,7 @@
     </div>
 
     <script>
+        
         document.addEventListener('DOMContentLoaded', function() {
             // Animate title
             const title = document.getElementById('animated-title');
@@ -398,7 +417,7 @@
             // Toggle dropdown
             dropdownBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                dropdownContent.classList.toggle('show');
+                const isShowing = dropdownContent.classList.contains('show');
                 this.querySelector('span:last-child').textContent = 
                     dropdownContent.classList.contains('show') ? '▲' : '▼';
             });
@@ -420,7 +439,24 @@
                 dropdownContent.classList.remove('show');
                 dropdownBtn.querySelector('span:last-child').textContent = '▼';
             });
-            
+             // Close all dropdowns first
+                document.querySelectorAll('.dropdown-content.show').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                    dropdown.previousElementSibling.querySelector('span:last-child').textContent = '▼';
+                });
+                
+                // Toggle this dropdown if it wasn't showing
+                if (!isShowing) {
+                    dropdownContent.classList.add('show');
+                    this.querySelector('span:last-child').textContent = '▲';
+                    
+                    // Calculate max height based on viewport space
+                    const viewportHeight = window.innerHeight;
+                    const dropdownPosition = dropdownContent.getBoundingClientRect().top;
+                    const spaceBelow = viewportHeight - dropdownPosition - 20; // 20px buffer
+                    dropdownContent.style.maxHeight = `${Math.min(spaceBelow, 400)}px`;
+                }
+            });
             // Get code button click
             getCodeBtn.addEventListener('click', function() {
                 if (!selectedTool) {
