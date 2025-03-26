@@ -147,7 +147,7 @@
             box-shadow: 0 0 0 3px rgba(74, 0, 224, 0.3);
         }
         
-       .dropdown-content {
+        .dropdown-content {
             position: absolute;
             top: 100%;
             left: 0;
@@ -155,36 +155,37 @@
             background: rgba(20, 20, 35, 0.95);
             border-radius: 8px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            max-height: 0;
+            max-height: 300px;
+            overflow-y: auto;
             opacity: 0;
-            transition: opacity 0.3s ease, max-height 0.3s ease;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
             z-index: 10;
             backdrop-filter: blur(15px);
-            overflow-y: auto; /* Changed from hidden to auto */
         }
         
         .dropdown-content.show {
-            max-height: 60vh; /* Changed from fixed px to viewport height */
             opacity: 1;
+            visibility: visible;
             margin-top: 5px;
-            overflow-y: auto; /* Ensure scrollbar appears when needed */
         }
-          /* Add scrollbar styling */
+        
         .dropdown-content::-webkit-scrollbar {
             width: 8px;
         }
-           .dropdown-content::-webkit-scrollbar-track {
+        
+        .dropdown-content::-webkit-scrollbar-track {
             background: rgba(74, 0, 224, 0.1);
             border-radius: 4px;
         }
         
         .dropdown-content::-webkit-scrollbar-thumb {
-            background: rgba(74, 0, 224, 0.3);
+            background: var(--primary);
             border-radius: 4px;
         }
         
         .dropdown-content::-webkit-scrollbar-thumb:hover {
-            background: rgba(74, 0, 224, 0.5);
+            background: var(--secondary);
         }
         
         .dropdown-item {
@@ -312,6 +313,10 @@
                 padding: 1rem 1.5rem;
             }
             
+            .dropdown-content {
+                max-height: 200px;
+            }
+            
             .visit-link {
                 padding: 1rem 1.5rem;
                 font-size: 1rem;
@@ -325,11 +330,11 @@
         <div class="animated-bg"></div>
         
         <h1 class="title" id="animated-title">JGS CODE STORE 2025</h1>
-        <p class="subtitle">කෘතිම බුද්ධියෙන් බල ගැන්වුන නවතම මෙවලම් ඔබේම නමින් හදලා නිකුත් කරන්න මෙන්න ඕපන් සෝස් අඩවියක්</p>
+        <p class="subtitle">Level up your skills with open-source AI powered tools</p>
         
         <div class="dropdown-container">
             <button class="dropdown-btn" id="dropdownBtn">
-                <span id="selectedOption">තෝරන්න මෙවලමක්</span>
+                <span id="selectedOption">Select the Code File</span>
                 <span>▼</span>
             </button>
             <div class="dropdown-content" id="dropdownContent">
@@ -357,12 +362,11 @@
         </div>
         
         <a href="#" class="visit-link" id="visitLink" target="_blank">
-            <i class="fas fa-external-link-alt"></i> Visit Tool Page
+            <i class="fas fa-external-link-alt"></i> Download Code
         </a>
     </div>
 
     <script>
-        
         document.addEventListener('DOMContentLoaded', function() {
             // Animate title
             const title = document.getElementById('animated-title');
@@ -398,26 +402,36 @@
             
             // Tool URLs mapping
             const toolUrls = {
-                  "JGS Photo Generator Ai Beta": "drive.google.com/file/d/15EGOLSzoHRLcZ7FTCpupVK6Gpy1vJbCz/view?usp=drive_link",
-            "JGS Code Run Plus 2025 Update": "drive.google.com/file/d/1EDq87-NUE3sjF4X30RAnSabbuA5slmsG/view?usp=drive_link",
-            "JGS Text Analyzer Pro+ 2025 Update": "drive.google.com/file/d/16ZirlkoLrhm74gGLLNik1Z3DyU8cTpB8/view?usp=drive_link",
-            "JGS Web Code Combiner Update": "drive.google.com/file/d/1sWUh933HklcC3mZ60EueyLPf1Es7bbp1/view?usp=drive_link",
-            "JGS Audio Tag Editor": "drive.google.com/file/d/1WvBXTxqxNr2MZrkT1teQ6ku5u7ign64D/view?usp=drive_link",
-            "JGS Text Analyzer Tool": "drive.google.com/file/d/16ZirlkoLrhm74gGLLNik1Z3DyU8cTpB8/view?usp=drive_link",
-            "JGS Advanced Image Watermarking App Update": "drive.google.com/file/d/12Xui7Zeek2WXJpQb6kEBpQ7u1Wi1E5g6/view?usp=drive_link",
-            "JGS Code Run Pro 25.2v": "drive.google.com/file/d/1xtdNlfeENEWVdXPCPsPtywFghO-MUSPm/view?usp=drive_link",
-            "JGS Interactive Graph Generator": "drive.google.com/file/d/1zmxz8XtpA_YGySexV90JikgRvEepWg8-/view?usp=drive_link",
-            "JGS Advanced QR Code Generator": "drive.google.com/file/d/1DPvk7GcV2MPKP4zuPhp_UpLtlB_xHdik/view?usp=drive_link",
-            "JGS Data Encryption & Decryption": "drive.google.com/file/d/115m6REN8BagAu4EArlaGsHY2jeWJE5s5/view?usp=drive_link",
-            "JGS Image Size Converter": "drive.google.com/file/d/1bxa60ELUT1zQr4RyXpuVdv9mGpmyXFXw/view?usp=drive_link",
-            "JGS Doc to Password 20.1v": "drive.google.com/file/d/1o_K4xEwgg6-O5LJQPVCBaazAjqhob-au/view?usp=drive_link",
-            "JGS Image Converter": "drive.google.com/file/d/1dybQmNeQXAYL34qirFA2phmu-4ooFbfk/view?usp=drive_link"
+                "JGS Photo Generator Ai Beta": "drive.google.com/file/d/15EGOLSzoHRLcZ7FTCpupVK6Gpy1vJbCz/view?usp=drive_link",
+                "JGS Code Run Plus 2025 Update": "drive.google.com/file/d/1EDq87-NUE3sjF4X30RAnSabbuA5slmsG/view?usp=drive_link",
+                "JGS Text Analyzer Pro+ 2025 Update": "drive.google.com/file/d/16ZirlkoLrhm74gGLLNik1Z3DyU8cTpB8/view?usp=drive_link",
+                "JGS Web Code Combiner Update": "drive.google.com/file/d/1sWUh933HklcC3mZ60EueyLPf1Es7bbp1/view?usp=drive_link",
+                "JGS Audio Tag Editor": "drive.google.com/file/d/1WvBXTxqxNr2MZrkT1teQ6ku5u7ign64D/view?usp=drive_link",
+                "JGS Text Analyzer Tool": "drive.google.com/file/d/16ZirlkoLrhm74gGLLNik1Z3DyU8cTpB8/view?usp=drive_link",
+                "JGS Advanced Image Watermarking App Update": "drive.google.com/file/d/12Xui7Zeek2WXJpQb6kEBpQ7u1Wi1E5g6/view?usp=drive_link",
+                "JGS Code Run Pro 25.2v": "drive.google.com/file/d/1xtdNlfeENEWVdXPCPsPtywFghO-MUSPm/view?usp=drive_link",
+                "JGS Interactive Graph Generator": "drive.google.com/file/d/1zmxz8XtpA_YGySexV90JikgRvEepWg8-/view?usp=drive_link",
+                "JGS Advanced QR Code Generator": "drive.google.com/file/d/1DPvk7GcV2MPKP4zuPhp_UpLtlB_xHdik/view?usp=drive_link",
+                "JGS Data Encryption & Decryption": "drive.google.com/file/d/115m6REN8BagAu4EArlaGsHY2jeWJE5s5/view?usp=drive_link",
+                "JGS Image Size Converter": "drive.google.com/file/d/1bxa60ELUT1zQr4RyXpuVdv9mGpmyXFXw/view?usp=drive_link",
+                "JGS Doc to Password 20.1v": "drive.google.com/file/d/1o_K4xEwgg6-O5LJQPVCBaazAjqhob-au/view?usp=drive_link",
+                "JGS Image Converter": "drive.google.com/file/d/1dybQmNeQXAYL34qirFA2phmu-4ooFbfk/view?usp=drive_link"
             };
             
             // Toggle dropdown
             dropdownBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                const isShowing = dropdownContent.classList.contains('show');
+                
+                // Close all other dropdowns first
+                document.querySelectorAll('.dropdown-content.show').forEach(openDropdown => {
+                    if (openDropdown !== dropdownContent) {
+                        openDropdown.classList.remove('show');
+                        openDropdown.previousElementSibling.querySelector('span:last-child').textContent = '▼';
+                    }
+                });
+                
+                // Toggle current dropdown
+                dropdownContent.classList.toggle('show');
                 this.querySelector('span:last-child').textContent = 
                     dropdownContent.classList.contains('show') ? '▲' : '▼';
             });
@@ -435,28 +449,13 @@
             });
             
             // Close dropdown when clicking outside
-            document.addEventListener('click', function() {
-                dropdownContent.classList.remove('show');
-                dropdownBtn.querySelector('span:last-child').textContent = '▼';
-            });
-             // Close all dropdowns first
-                document.querySelectorAll('.dropdown-content.show').forEach(dropdown => {
-                    dropdown.classList.remove('show');
-                    dropdown.previousElementSibling.querySelector('span:last-child').textContent = '▼';
-                });
-                
-                // Toggle this dropdown if it wasn't showing
-                if (!isShowing) {
-                    dropdownContent.classList.add('show');
-                    this.querySelector('span:last-child').textContent = '▲';
-                    
-                    // Calculate max height based on viewport space
-                    const viewportHeight = window.innerHeight;
-                    const dropdownPosition = dropdownContent.getBoundingClientRect().top;
-                    const spaceBelow = viewportHeight - dropdownPosition - 20; // 20px buffer
-                    dropdownContent.style.maxHeight = `${Math.min(spaceBelow, 400)}px`;
+            document.addEventListener('click', function(e) {
+                if (!dropdownBtn.contains(e.target) && !dropdownContent.contains(e.target)) {
+                    dropdownContent.classList.remove('show');
+                    dropdownBtn.querySelector('span:last-child').textContent = '▼';
                 }
             });
+            
             // Get code button click
             getCodeBtn.addEventListener('click', function() {
                 if (!selectedTool) {
